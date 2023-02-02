@@ -12,6 +12,7 @@ router.post("/createPost", requireSignIn, (req, res) => {
   if (!title || !body) {
     return res.status(422).json({ error: "Please give all the data" });
   } else {
+    req.user.password = undefined; //for not showing the password
     const post = new Post({
       title: title,
       body: body,
