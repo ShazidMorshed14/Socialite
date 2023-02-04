@@ -6,6 +6,28 @@ const requireSignIn = require("../Middleware/requireSignIn");
 //importing Post model
 const Post = mongoose.model("Post");
 
+router.get("/allpost", (req, res) => {
+  Post.find()
+    .populate("postedby", "_id name")
+    .then((posts) => {
+      res.json(posts);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/mypost", requireSignIn, (req, res) => {
+  Post.find({ postedby: req.user._id })
+    .populate("postedby", "_id name")
+    .then((mypost) => {
+      res.json({ mypost: mypost });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.post("/createPost", requireSignIn, (req, res) => {
   const { title, body, photo } = req.body;
 
