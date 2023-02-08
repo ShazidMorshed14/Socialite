@@ -14,7 +14,7 @@ const SidebarRight = () => {
     <div className="sidebar right">
       <div className="container borderNone">
         <div className="mainTitle">
-          <h3 className="padding">Your Pages</h3>
+          <h3>Your Pages</h3>
           <i className="fa fa-ellipsis-h" />
         </div>
         <div className="globalProfile">

@@ -20,7 +20,7 @@ router.post("/signup", (req, res) => {
     User.findOne({ email: email })
       .then((prevUser) => {
         if (prevUser) {
-          return res.status(409).json({ error: "User Already Exists" });
+          return res.status(300).json({ error: "User Already Exists" });
         } else {
           bcrypt
             .hash(password, 12)
@@ -70,8 +70,16 @@ router.post("/signin", (req, res) => {
             .then((doMatch) => {
               if (doMatch) {
                 const token = jwt.sign({ _id: foundUser._id }, JWT_SECRET);
+                const { _id, name, email } = foundUser;
 
-                res.json({ token: token });
+                res.json({
+                  token: token,
+                  user: {
+                    _id,
+                    name,
+                    email,
+                  },
+                });
               } else {
                 res.status(422).json({ error: "Invalid Email or Password" });
               }

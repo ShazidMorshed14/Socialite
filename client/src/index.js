@@ -7,9 +7,12 @@ import "bootstrap/dist/css/bootstrap.css";
 //import "bootstrap/dist/js/bootstrap.bundle";
 import "bootstrap/dist/js/bootstrap.bundle";
 import "font-awesome/css/font-awesome.min.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <ToastContainer />
     <App />
   </React.StrictMode>
 );

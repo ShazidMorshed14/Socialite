@@ -5,7 +5,7 @@ import "../../styles/common.scss";
 const Profile = () => {
   return (
     <div className="profile-page-wrapper">
-      <Container>
+      <div>
         <Row className="full-row">
           <Col md={4} className="each-col" id="left">
             <div className="details-section-wrapper">
@@ -120,7 +120,7 @@ const Profile = () => {
             right side
           </Col>
         </Row>
-      </Container>
+      </div>
     </div>
   );
 };

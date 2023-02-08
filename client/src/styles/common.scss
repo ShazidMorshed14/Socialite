@@ -1,3 +1,39 @@
+//common form styles
+.form-style {
+  border: 1px solid #e1e1e1;
+  padding: 1em;
+  border-radius: 8px;
+
+  //top section
+  .form-top-avatar {
+    img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+    }
+  }
+
+  .form-lable-txt {
+    font-weight: 600;
+    color: #333;
+    font-size: large;
+  }
+
+  .button-section {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .form-input-text-bold {
+    font-weight: 600;
+  }
+}
+
+.required-span {
+  font-weight: 600;
+  color: red;
+}
+
 //navbar styles
 .navbar-wrapper {
   position: fixed;
@@ -355,6 +391,170 @@
           background-size: cover;
           background-repeat: no-repeat;
         }
+      }
+    }
+  }
+}
+
+.profile-page-wrapper {
+  margin: 4em 4%;
+}
+
+.profile-top-wrapper {
+  .profile-head {
+    transform: translateY(5rem);
+  }
+
+  .cover {
+    background-image: url(https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+.create-post-screen-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin-top: 4em;
+}
+
+.file-uploader-wrapper {
+  .file-card {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed #cbd5e0;
+    background-color: #edf2f7;
+    min-width: 380px;
+    min-height: 150px;
+
+    .file-inputs {
+      position: relative;
+      margin-bottom: 1.5em;
+
+      input {
+        position: relative;
+        text-align: right;
+        opacity: 0;
+        z-index: 2;
+        cursor: pointer;
+        height: 46px;
+        max-width: 200px;
+      }
+
+      button {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        color: #fff;
+        background-color: #141e30;
+        font-size: 1.1rem;
+        cursor: pointer;
+        border-radius: 4px;
+        border: none;
+        outline: none;
+        // padding: 1em;
+        transition: background-color 0.4s;
+        box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.5);
+
+        i {
+          width: 1.5em;
+          height: 1.5em;
+          padding: 0.4em;
+          background-color: #fff;
+          color: #141e30;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 0.8em;
+          font-size: 0.8em;
+        }
+      }
+
+      &:hover {
+        button {
+          background-color: #141e30;
+        }
+      }
+    }
+  }
+
+  .main {
+    font-weight: bold;
+    margin-bottom: 0.4em;
+  }
+
+  .info {
+    font-size: 0.8rem;
+  }
+
+  .file-showing {
+    display: flex;
+    border: 3px dashed #cbd5e0;
+    padding: 1em;
+    margin: 0.5em 0em;
+    width: 100%;
+    max-height: 310px;
+    overflow-x: scroll;
+    .image-wrapper {
+      position: relative;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin: 0 0.5em;
+      img {
+        height: 250px;
+      }
+
+      .icon-section {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid #333;
+      }
+    }
+
+    //while uploading
+    .image-wrapper-uploading {
+      position: relative;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin: 0 0.5em;
+      opacity: 0.5;
+      img {
+        height: 250px;
+      }
+
+      .icon-section {
+        position: absolute;
+        top: 40%;
+        right: 40%;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid #333;
       }
     }
   }

@@ -1,15 +1,91 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../../styles/common.scss";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShiftToSignup = (e) => {
     navigate("/signup");
+  };
+
+  const signInRequest = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (email && password) {
+      if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          // Authorization: "JWT fefege...",
+        };
+
+        const reqBody = {
+          email: email,
+          password: password,
+        };
+
+        axios
+          .post("/signin", reqBody, {
+            headers: headers,
+          })
+          .then((response) => {
+            //console.log("success response", response.data);
+            if (response.data.user) {
+              setLoading(false);
+              navigate("/");
+              localStorage.setItem("jwt", response.data.token);
+              localStorage.setItem("user", JSON.stringify(response.data.user));
+              toast.success("Login Successful!", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                theme: "light",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(error.response.data.error, {
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              theme: "light",
+            });
+            setLoading(false);
+          });
+      } else {
+        toast.error("Email Not Valid", {
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          theme: "light",
+        });
+        setLoading(false);
+      }
+    } else {
+      toast.error("Please Give all the data", {
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
   };
   return (
     <div className="authentication_wrapper">
@@ -46,6 +122,9 @@ const Login = () => {
                       type="text"
                       placeholder="Enter your E-mail"
                       require=""
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
                     />{" "}
                   </div>
                   <div className="input-text">
@@ -54,7 +133,9 @@ const Login = () => {
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       id="password-input-login"
-                      require=""
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                     />{" "}
                     <i
                       className="fa fa-eye-slash passcode1"
@@ -67,8 +148,19 @@ const Login = () => {
                     <p>Remember password</p>
                   </div>
                   <div className="buttons">
-                    {" "}
-                    <button className="signin_submit">Sign in</button>{" "}
+                    {!loading ? (
+                      <button
+                        className="signin_submit"
+                        onClick={(e) => signInRequest(e)}
+                        type="submit"
+                      >
+                        Sign in
+                      </button>
+                    ) : (
+                      <button className="signin_submit">
+                        <i class="fa fa-circle-o-notch fa-spin"></i>
+                      </button>
+                    )}
                     <button
                       className="sign_up_back_here"
                       onClick={handleShiftToSignup}

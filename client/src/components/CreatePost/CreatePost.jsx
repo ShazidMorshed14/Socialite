@@ -4,10 +4,16 @@ import LiveVideoIcon from "../../images/svg/live_video.svg";
 import PhotoIcon from "../../images/svg/photo.svg";
 import SmileIcon from "../../images/svg/smile.svg";
 import { FaVideo } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
+  const navigate = useNavigate();
+
+  const hanldeSendToCreatePost = (e) => {
+    navigate("/create-post");
+  };
   return (
-    <div className="createPost">
+    <div className="createPost" onClick={(e) => hanldeSendToCreatePost(e)}>
       <div className="input">
         <div
           className="globalRoundProfile"

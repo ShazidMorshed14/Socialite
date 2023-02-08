@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../../styles/common.scss";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -9,11 +11,81 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShiftToSignin = (e) => {
     navigate("/signin");
+  };
+
+  const signUpRequest = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (name && email && password) {
+      if (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          // Authorization: "JWT fefege...",
+        };
+
+        const reqBody = {
+          name: name,
+          email: email,
+          password: password,
+        };
+
+        axios
+          .post("/signup", reqBody, {
+            headers: headers,
+          })
+          .then((response) => {
+            //console.log("success response", response.data);
+            if (response.data.userDetails) {
+              setLoading(false);
+              navigate("/signin");
+              toast.success("Registration Successful!", {
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                theme: "light",
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            toast.error(error.response.data.error, {
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              theme: "light",
+            });
+            setLoading(false);
+          });
+      } else {
+        toast.error("Email Not Valid", {
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          theme: "light",
+        });
+        setLoading(false);
+      }
+    } else {
+      toast.error("Please Give all the data", {
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        theme: "light",
+      });
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,6 +120,8 @@ const Signup = () => {
                   <div className="input-text">
                     {" "}
                     <input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       type="text"
                       placeholder="Enter your name"
                       id="user-name"
@@ -56,7 +130,12 @@ const Signup = () => {
                   </div>
                   <div className="input-text">
                     {" "}
-                    <input type="text" placeholder="Enter your Email" />{" "}
+                    <input
+                      type="text"
+                      placeholder="Enter your Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
                   </div>
                   <div className="input-text">
                     {" "}
@@ -65,6 +144,8 @@ const Signup = () => {
                       placeholder="Enter your password"
                       id="password-input-login"
                       require=""
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />{" "}
                     <i
                       className="fa fa-eye-slash passcode1"
@@ -74,7 +155,19 @@ const Signup = () => {
 
                   <div className="buttons first">
                     {" "}
-                    <button className="sign_up_here">Sign up</button>{" "}
+                    {!loading ? (
+                      <button
+                        className="sign_up_here"
+                        onClick={(e) => signUpRequest(e)}
+                        type="submit"
+                      >
+                        Signup
+                      </button>
+                    ) : (
+                      <button className="sign_up_here">
+                        <i class="fa fa-circle-o-notch fa-spin"></i>
+                      </button>
+                    )}
                     <button
                       className="sign_in_here"
                       onClick={handleShiftToSignin}

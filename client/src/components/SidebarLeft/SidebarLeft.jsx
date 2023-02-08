@@ -20,7 +20,7 @@ const SidebarLeft = () => {
               backgroundImage: `url(${ProfileImg})`,
             }}
           />
-          <div className="name">FilipCodes YT</div>
+          <div className="name">Shazid Morshed</div>
         </div>
         <div className="globalProfile">
           <div

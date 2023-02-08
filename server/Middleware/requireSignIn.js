@@ -7,13 +7,13 @@ module.exports = (req, res, next) => {
   //console.log(authorization);
 
   if (!authorization) {
-    return res.status(409).json({ error: "you must signin first" });
+    return res.status(409).json({ error: "You Must Signin First" });
   } else {
     const token = authorization.replace("Bearer ", "");
 
     jwt.verify(token, JWT_SECRET, (err, payload) => {
       if (err) {
-        return res.status(409).json({ error: "you must signin first" });
+        return res.status(409).json({ error: "You Must Signin First" });
       } else {
         const { _id } = payload;
         //console.log(_id);
