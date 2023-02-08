@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/common.scss";
 import { toast } from "react-toastify";
+import { UserContext } from "../../App";
 
 const Login = () => {
+  const { state, dispatch } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -46,6 +49,7 @@ const Login = () => {
               navigate("/");
               localStorage.setItem("jwt", response.data.token);
               localStorage.setItem("user", JSON.stringify(response.data.user));
+              dispatch({ type: "USER", payload: response.data.user });
               toast.success("Login Successful!", {
                 autoClose: 1000,
                 hideProgressBar: false,
