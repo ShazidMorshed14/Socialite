@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ProfileImg from "../../images/img/profile.jpg";
 import Icon1 from "../../images/ico/1.png";
 import Icon2 from "../../images/ico/2.png";
@@ -8,8 +8,11 @@ import Code1 from "../../images/img/code1.jpg";
 import Code2 from "../../images/img/code2.jpg";
 import Code3 from "../../images/img/code3.jpg";
 import Code4 from "../../images/img/code4.jpg";
+import { UserContext } from "../../App";
 
 const SidebarLeft = () => {
+  const { state, dispatch } = useContext(UserContext);
+
   return (
     <div className="sidebar left">
       <div className="container borderNone">
@@ -20,7 +23,7 @@ const SidebarLeft = () => {
               backgroundImage: `url(${ProfileImg})`,
             }}
           />
-          <div className="name">Shazid Morshed</div>
+          <div className="name">{state ? state.name : "loading"}</div>
         </div>
         <div className="globalProfile">
           <div

@@ -559,3 +559,23 @@
     }
   }
 }
+
+.comment_box {
+  input {
+    border: none;
+    margin-bottom: 0.5em;
+    width: 100%;
+    font-weight: 600 !important;
+  }
+
+  input:focus {
+    outline: none !important;
+    background-color: #ffffff;
+  }
+}
+
+.comment_showing-box {
+  background-color: #f0f2f5;
+  border-radius: 12px;
+  padding: 0.5em;
+}

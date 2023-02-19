@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../App";
+import DefaultProPic from "../../images/img/default-avatar.png";
 
-const ProfileTop = ({ posts }) => {
+const UserProfileTop = ({ user, posts }) => {
   const { state, dispatch } = useContext(UserContext);
 
   return (
@@ -14,23 +15,23 @@ const ProfileTop = ({ posts }) => {
               <div className="media align-items-end profile-head">
                 <div className="profile mr-3">
                   <img
-                    src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+                    //src={user && user.photo ? user.photo : DefaultProPic}
+                    src={DefaultProPic}
                     alt="..."
                     width={130}
                     className="rounded mb-2 img-thumbnail"
                   />
                   <a className="btn btn-outline-dark btn-sm btn-block">
-                    Edit profile
+                    Follow
                   </a>
                 </div>
                 <div className="media-body mb-5 text-white">
-                  <h4 className="mt-0 mb-0">
-                    {state ? state.name : "loading"}
-                  </h4>
+                  <h4 className="mt-0 mb-0">{user.name}</h4>
                   <p className="small mb-4">
                     {" "}
                     <i className="fas fa-map-marker-alt mr-2" />
-                    New York
+                    {/* {user && user.city ? user.city : "Bangladesh"} */}
+                    Bangladesh
                   </p>
                 </div>
               </div>
@@ -121,4 +122,4 @@ const ProfileTop = ({ posts }) => {
   );
 };
 
-export default ProfileTop;
+export default UserProfileTop;

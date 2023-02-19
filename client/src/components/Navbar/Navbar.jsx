@@ -1,13 +1,22 @@
 import React, { useContext } from "react";
 import "../../styles/common.scss";
 import { DiCodeigniter } from "react-icons/di";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
 const Navbar = () => {
   const { state, dispatch } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    localStorage.clear();
+    dispatch({ type: "CLEAR" });
+    navigate("/signin");
+  };
+
   const renderList = () => {
+    console.log("state context", state);
     if (state) {
       return [
         <>
@@ -26,6 +35,15 @@ const Navbar = () => {
             <Link className="nav-link active" to="/create-post">
               Create Post
             </Link>
+          </li>
+          <li
+            className="nav-item"
+            role="presentation"
+            onClick={(e) => handleLogout(e)}
+          >
+            <a className="nav-link active" style={{ cursor: "pointer" }}>
+              Logout
+            </a>
           </li>
         </>,
       ];

@@ -16,6 +16,7 @@ import { createContext } from "react";
 import { useReducer } from "react";
 import { initialState, reducer } from "./components/Reducers/userReducer";
 import { useContext } from "react";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 export const UserContext = createContext();
 
@@ -27,7 +28,7 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       dispatch({ type: "USER", payload: user });
-      navigate("/");
+      // navigate("/");
     } else {
       navigate("/signin");
     }
@@ -40,6 +41,7 @@ const Routing = () => {
       <Route exact path="/signup" element={<Signup />} />
       <Route exact path="/profile" element={<NewProfile />} />
       <Route exact path="/create-post" element={<CreatePostScreen />} />
+      <Route exact path="/profile/:userId" element={<UserProfile />} />
     </Routes>
   );
 };

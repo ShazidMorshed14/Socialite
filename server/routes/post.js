@@ -6,9 +6,11 @@ const requireSignIn = require("../Middleware/requireSignIn");
 //importing Post model
 const Post = mongoose.model("Post");
 
-router.get("/allpost", (req, res) => {
+router.get("/allpost", requireSignIn, (req, res) => {
   Post.find()
-    .populate("postedby", "_id name")
+    .populate("postedby")
+    .populate("comments.postedby")
+    .sort({ _id: -1 })
     .then((posts) => {
       res.json(posts);
     })
@@ -19,7 +21,9 @@ router.get("/allpost", (req, res) => {
 
 router.get("/mypost", requireSignIn, (req, res) => {
   Post.find({ postedby: req.user._id })
-    .populate("postedby", "_id name")
+    .populate("postedby")
+    .populate("comments.postedby")
+    .sort({ _id: -1 })
     .then((mypost) => {
       res.json({ mypost: mypost });
     })
@@ -51,6 +55,95 @@ router.post("/createPost", requireSignIn, (req, res) => {
         console.log(err);
       });
   }
+});
+
+router.put("/like", requireSignIn, (req, res) => {
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $push: { likes: req.user._id },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("postedby")
+    .populate("comments.postedby")
+    .exec((err, result) => {
+      if (err) {
+        res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.put("/unlike", requireSignIn, (req, res) => {
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $pull: { likes: req.user._id },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("postedby")
+    .populate("comments.postedby")
+    .exec((err, result) => {
+      if (err) {
+        res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.put("/comment", requireSignIn, (req, res) => {
+  const comment = {
+    text: req.body.text,
+    postedby: req.user,
+  };
+
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    {
+      $push: { comments: comment },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("postedby")
+    .populate("comments.postedby")
+    .exec((err, result) => {
+      if (err) {
+        res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.delete("/deletepost/:postId", requireSignIn, (req, res) => {
+  Post.findOne({ _id: req.params.postId })
+    .populate("postedby")
+    .exec((err, post) => {
+      if (err || !post) {
+        return res.status(422).json({ error: err });
+      }
+
+      if (post.postedby._id.toString() === req.user._id.toString()) {
+        post
+          .remove()
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
 });
 
 module.exports = router;

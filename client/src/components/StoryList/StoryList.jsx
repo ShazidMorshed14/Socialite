@@ -39,7 +39,7 @@ const StoryList = () => {
             }}
           />
         </div>
-        <h3>FilipCodes YT</h3>
+        <h3>Shazid Morshed</h3>
         <div
           className="bg"
           style={{
