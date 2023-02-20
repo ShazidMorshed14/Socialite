@@ -70,7 +70,7 @@ router.post("/signin", (req, res) => {
             .then((doMatch) => {
               if (doMatch) {
                 const token = jwt.sign({ _id: foundUser._id }, JWT_SECRET);
-                const { _id, name, email } = foundUser;
+                const { _id, name, email, followers, following } = foundUser;
 
                 res.json({
                   token: token,
@@ -78,6 +78,8 @@ router.post("/signin", (req, res) => {
                     _id,
                     name,
                     email,
+                    followers,
+                    following,
                   },
                 });
               } else {

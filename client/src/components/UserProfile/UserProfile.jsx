@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { UserContext } from "../../App";
 import CreatePost from "../CreatePost/CreatePost";
 import PostList from "../PostList/PostList";
 // import ProfileTop from "../ProfileTop/ProfileTop";
@@ -11,11 +12,17 @@ import SidebarRight from "../SidebarRight/SidebarRight";
 import UserProfileTop from "../UserProfileTop/UserProfileTop";
 
 const UserProfile = () => {
+  const { state, dispatch } = useContext(UserContext);
+  const { userId } = useParams();
+
+  const [showFollow, setShowFollow] = useState(
+    state ? !state.following.includes(userId) : true
+  );
+
   const [userProfile, setUserProfile] = useState();
   const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const { userId } = useParams();
+  const [prof, setProf] = useState();
 
   const fetchAllUserDetails = (userId) => {
     const headers = {
@@ -36,6 +43,7 @@ const UserProfile = () => {
           setUserProfile(response.data);
           setUserPosts(response.data.posts);
           setLoading(false);
+          setProf(response.data);
           //console.log(response.data);
         }
       })
@@ -174,6 +182,100 @@ const UserProfile = () => {
       });
   }
 
+  function followUser() {
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    };
+
+    //setLoading(true);
+
+    const reqBody = {
+      followId: userId,
+    };
+
+    axios
+      .put("/follow", reqBody, {
+        headers: headers,
+      })
+      .then((response) => {
+        console.log("follow response", response.data);
+        if (response.data) {
+          dispatch({
+            type: "UPDATE",
+            payload: {
+              following: response.data.following,
+              followers: response.data.followers,
+            },
+          });
+          localStorage.setItem("user", JSON.stringify(response.data));
+          setShowFollow(false);
+          setProf((prevState) => {
+            return {
+              user: {
+                ...prevState.user,
+                followers: [...prevState.user.followers, response.data._id],
+              },
+            };
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        //setLoading(false);
+      });
+  }
+
+  function unfollowUser() {
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + localStorage.getItem("jwt"),
+    };
+
+    //setLoading(true);
+
+    const reqBody = {
+      followId: userId,
+    };
+
+    axios
+      .put("/unfollow", reqBody, {
+        headers: headers,
+      })
+      .then((response) => {
+        console.log("unfollow response", response.data);
+        if (response.data) {
+          dispatch({
+            type: "UPDATE",
+            payload: {
+              following: response.data.following,
+              followers: response.data.followers,
+            },
+          });
+          localStorage.setItem("user", JSON.stringify(response.data));
+          setShowFollow(true);
+
+          setProf((prevState) => {
+            const newFollower = prevState.user.followers.filter(
+              (item) => item !== response.data._id
+            );
+            return {
+              user: {
+                ...prevState.user,
+                followers: newFollower,
+              },
+            };
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        //setLoading(false);
+      });
+  }
+
   useEffect(() => {
     fetchAllUserDetails(userId);
   }, [userId]);
@@ -188,7 +290,14 @@ const UserProfile = () => {
         {loading ? (
           <>Loading...</>
         ) : userProfile ? (
-          <UserProfileTop user={userProfile.user} posts={userPosts} />
+          <UserProfileTop
+            user={userProfile.user}
+            posts={userPosts}
+            followUser={followUser}
+            unfollowUser={unfollowUser}
+            prof={prof}
+            showFollow={showFollow}
+          />
         ) : (
           <></>
         )}

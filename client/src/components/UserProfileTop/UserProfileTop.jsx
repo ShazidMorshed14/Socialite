@@ -2,8 +2,16 @@ import React, { useContext } from "react";
 import { UserContext } from "../../App";
 import DefaultProPic from "../../images/img/default-avatar.png";
 
-const UserProfileTop = ({ user, posts }) => {
+const UserProfileTop = ({
+  user,
+  posts,
+  followUser,
+  prof,
+  unfollowUser,
+  showFollow,
+}) => {
   const { state, dispatch } = useContext(UserContext);
+  console.log("show follow", showFollow);
 
   return (
     <div className="profile-top-wrapper">
@@ -21,9 +29,21 @@ const UserProfileTop = ({ user, posts }) => {
                     width={130}
                     className="rounded mb-2 img-thumbnail"
                   />
-                  <a className="btn btn-outline-dark btn-sm btn-block">
-                    Follow
-                  </a>
+                  {showFollow ? (
+                    <a
+                      className="btn btn-outline-dark btn-sm btn-block"
+                      onClick={() => followUser()}
+                    >
+                      Follow
+                    </a>
+                  ) : (
+                    <a
+                      className="btn btn-outline-dark btn-sm btn-block"
+                      onClick={() => unfollowUser()}
+                    >
+                      Unfollow
+                    </a>
+                  )}
                 </div>
                 <div className="media-body mb-5 text-white">
                   <h4 className="mt-0 mb-0">{user.name}</h4>
@@ -47,7 +67,9 @@ const UserProfileTop = ({ user, posts }) => {
                   </small>
                 </li> */}
                 <li className="list-inline-item">
-                  <h5 className="font-weight-bold mb-0 d-block">745</h5>
+                  <h5 className="font-weight-bold mb-0 d-block">
+                    {!prof.user ? "loading" : prof.user.followers.length}
+                  </h5>
                   <small className="text-muted">
                     {" "}
                     <i className="fa fa-user mr-1" />
@@ -55,7 +77,10 @@ const UserProfileTop = ({ user, posts }) => {
                   </small>
                 </li>
                 <li className="list-inline-item">
-                  <h5 className="font-weight-bold mb-0 d-block">340</h5>
+                  <h5 className="font-weight-bold mb-0 d-block">
+                    {" "}
+                    {!prof.user ? "loading" : prof.user.following.length}
+                  </h5>
                   <small className="text-muted">
                     {" "}
                     <i className="fa fa-user mr-1" />

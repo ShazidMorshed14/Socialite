@@ -19,6 +19,20 @@ router.get("/allpost", requireSignIn, (req, res) => {
     });
 });
 
+router.get("/getsubpost", requireSignIn, (req, res) => {
+  //posted by is following
+  Post.find({ postedby: { $in: req.user.following } })
+    .populate("postedby")
+    .populate("comments.postedby")
+    .sort({ _id: -1 })
+    .then((posts) => {
+      res.json(posts);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 router.get("/mypost", requireSignIn, (req, res) => {
   Post.find({ postedby: req.user._id })
     .populate("postedby")

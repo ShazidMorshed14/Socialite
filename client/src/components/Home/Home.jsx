@@ -31,9 +31,9 @@ const Home = () => {
       .then((response) => {
         //console.log("success response", response.data);
         if (response.data) {
-          setLoading(false);
           setPosts(response.data);
           console.log(response.data);
+          setLoading(false);
         }
       })
       .catch((error) => {
