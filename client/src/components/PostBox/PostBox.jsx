@@ -13,6 +13,8 @@ import ProfileImage2 from "../../images/img/2.jpg";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
+import DefaultProPic from "../../images/img/default-avatar.png";
+
 const PostBox = ({ post, likePost, unlikePost, makeComment, deletePost }) => {
   console.log("post details", post);
 
@@ -41,7 +43,9 @@ const PostBox = ({ post, likePost, unlikePost, makeComment, deletePost }) => {
           <div
             className="globalRoundProfile"
             style={{
-              backgroundImage: `url(${Profile1})`,
+              backgroundImage: `url(${
+                post.postedby.pic ? post.postedby.pic : DefaultProPic
+              })`,
             }}
           >
             <span />
@@ -152,7 +156,7 @@ const PostBox = ({ post, likePost, unlikePost, makeComment, deletePost }) => {
                   className="globalRoundProfile"
                   //style={{ "background-image": "url(./img/2.jpg)" }}
                   style={{
-                    backgroundImage: `url(${ProfileImage2})`,
+                    backgroundImage: `url(${comment.postedby.pic})`,
                   }}
                 >
                   <span />
@@ -194,7 +198,11 @@ const PostBox = ({ post, likePost, unlikePost, makeComment, deletePost }) => {
               className="globalRoundProfile"
               //style={{ "background-image": "url(./img/2.jpg)" }}
               style={{
-                backgroundImage: `url(${ProfileImage2})`,
+                backgroundImage: `url(${
+                  state
+                    ? state.pic
+                    : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+                })`,
               }}
             >
               <span />

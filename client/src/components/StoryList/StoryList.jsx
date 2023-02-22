@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PlusWhiteIcon from "../../images/svg/plusWhite.svg";
 import ProfileStory from "../../images/img/profile_story.jpg";
 import Profile1 from "../../images/img/1.jpg";
@@ -7,8 +7,10 @@ import Profile3 from "../../images/img/3.jpg";
 import Profile4 from "../../images/img/4.jpg";
 import Profile5 from "../../images/img/5.jpg";
 import Profile6 from "../../images/img/6.jpg";
+import { UserContext } from "../../App";
 
 const StoryList = () => {
+  const { state, dispatch } = useContext(UserContext);
   return (
     <div className="story">
       <div className="cover">
@@ -24,7 +26,11 @@ const StoryList = () => {
           className="bg"
           //style={{ "background-image": "url(./img/profile_story.jpg)" }}
           style={{
-            backgroundImage: `url(${ProfileStory})`,
+            backgroundImage: `url(${
+              state
+                ? state.pic
+                : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+            })`,
           }}
         >
           <span />

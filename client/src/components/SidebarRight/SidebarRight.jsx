@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Profile from "../../images/img/profile.jpg";
 import BellLightSvg from "../../images/svg/bellLight.svg";
 import MegaPhoneSvg from "../../images/svg/megaphone.svg";
@@ -8,8 +8,10 @@ import Profile3 from "../../images/img/3.jpg";
 import Profile4 from "../../images/img/4.jpg";
 import Profile5 from "../../images/img/5.jpg";
 import Profile6 from "../../images/img/6.jpg";
+import { UserContext } from "../../App";
 
 const SidebarRight = () => {
+  const { state, dispatch } = useContext(UserContext);
   return (
     <div className="sidebar right">
       <div className="container borderNone">
@@ -22,7 +24,11 @@ const SidebarRight = () => {
             className="globalRoundProfile"
             //style={{ "background-image": "url(./img/profile.jpg)" }}
             style={{
-              backgroundImage: `url(${Profile})`,
+              backgroundImage: `url(${
+                state
+                  ? state.pic
+                  : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+              })`,
             }}
           />
           <div className="name">My Page</div>

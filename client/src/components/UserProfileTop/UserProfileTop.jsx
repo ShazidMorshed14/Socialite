@@ -24,7 +24,7 @@ const UserProfileTop = ({
                 <div className="profile mr-3">
                   <img
                     //src={user && user.photo ? user.photo : DefaultProPic}
-                    src={DefaultProPic}
+                    src={prof.user.pic ? prof.user.pic : DefaultProPic}
                     alt="..."
                     width={130}
                     className="rounded mb-2 img-thumbnail"

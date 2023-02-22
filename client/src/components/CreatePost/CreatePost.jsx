@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import ProfileImage2 from "../../images/img/2.jpg";
 import LiveVideoIcon from "../../images/svg/live_video.svg";
 import PhotoIcon from "../../images/svg/photo.svg";
 import SmileIcon from "../../images/svg/smile.svg";
 import { FaVideo } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../App";
 
 const CreatePost = () => {
   const navigate = useNavigate();
+  const { state, dispatch } = useContext(UserContext);
 
   const hanldeSendToCreatePost = (e) => {
     navigate("/create-post");
@@ -19,7 +21,11 @@ const CreatePost = () => {
           className="globalRoundProfile"
           //style={{ "background-image": "url(./img/2.jpg)" }}
           style={{
-            backgroundImage: `url(${ProfileImage2})`,
+            backgroundImage: `url(${
+              state
+                ? state.pic
+                : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+            })`,
           }}
         >
           <span />

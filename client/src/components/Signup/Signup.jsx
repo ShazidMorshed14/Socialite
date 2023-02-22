@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/common.scss";
 import { toast } from "react-toastify";
+import FileUpload from "../FileUpload/FileUpload";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -15,8 +16,16 @@ const Signup = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [files, setFiles] = useState([]);
+  const [photo, setPhoto] = useState("");
+
   const handleShiftToSignin = (e) => {
     navigate("/signin");
+  };
+
+  const removeFile = (filename) => {
+    setFiles(files.filter((file) => file.name !== filename));
+    setPhoto("");
   };
 
   const signUpRequest = (e) => {
@@ -35,8 +44,12 @@ const Signup = () => {
           name: name,
           email: email,
           password: password,
+          pic: photo
+            ? photo
+            : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png",
         };
 
+        console.log("sending signup request", reqBody);
         axios
           .post("/signup", reqBody, {
             headers: headers,
@@ -119,6 +132,16 @@ const Signup = () => {
                   </div>
                   <div className="input-text">
                     {" "}
+                    <div>
+                      <FileUpload
+                        files={files}
+                        setFiles={setFiles}
+                        removeFile={removeFile}
+                        loading={loading}
+                        setLoading={setLoading}
+                        setPhoto={setPhoto}
+                      />
+                    </div>
                     <input
                       value={name}
                       onChange={(e) => setName(e.target.value)}

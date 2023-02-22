@@ -1,14 +1,17 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import "../../styles/common.scss";
 import FileUpload from "../FileUpload/FileUpload";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../images/img/profile.jpg";
+import { UserContext } from "../../App";
 
 const CreatePostScreen = () => {
   const navigate = useNavigate();
+
+  const { state, dispatch } = useContext(UserContext);
 
   const [files, setFiles] = useState([]);
 
@@ -89,7 +92,15 @@ const CreatePostScreen = () => {
         <Form className="form-style">
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <div className="form-top-avatar">
-              <img src={Profile} alt="" srcset="" />
+              <img
+                src={
+                  state
+                    ? state.pic
+                    : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+                }
+                alt=""
+                srcset=""
+              />
               <Form.Label className="form-lable-txt ml-2">
                 Shazid Morshed
               </Form.Label>

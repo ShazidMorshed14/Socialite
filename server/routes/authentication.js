@@ -13,7 +13,7 @@ const requiredSignIn = require("../Middleware/requireSignIn");
 const User = mongoose.model("User");
 
 router.post("/signup", (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, pic } = req.body;
   if (!name || !email || !password) {
     res.status(422).json({ error: "You need to give all the information" });
   } else {
@@ -29,6 +29,9 @@ router.post("/signup", (req, res) => {
                 name: name,
                 email: email,
                 password: hashedPassword,
+                pic: pic
+                  ? pic
+                  : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png",
               });
 
               user
@@ -70,7 +73,8 @@ router.post("/signin", (req, res) => {
             .then((doMatch) => {
               if (doMatch) {
                 const token = jwt.sign({ _id: foundUser._id }, JWT_SECRET);
-                const { _id, name, email, followers, following } = foundUser;
+                const { _id, name, email, followers, following, pic } =
+                  foundUser;
 
                 res.json({
                   token: token,
@@ -80,6 +84,7 @@ router.post("/signin", (req, res) => {
                     email,
                     followers,
                     following,
+                    pic,
                   },
                 });
               } else {

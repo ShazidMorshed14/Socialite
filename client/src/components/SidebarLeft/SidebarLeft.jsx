@@ -20,7 +20,11 @@ const SidebarLeft = () => {
           <div
             className="globalRoundProfile"
             style={{
-              backgroundImage: `url(${ProfileImg})`,
+              backgroundImage: `url(${
+                state
+                  ? state.pic
+                  : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+              })`,
             }}
           />
           <div className="name">{state ? state.name : "loading"}</div>

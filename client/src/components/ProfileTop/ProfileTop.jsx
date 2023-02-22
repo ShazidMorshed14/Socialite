@@ -14,7 +14,11 @@ const ProfileTop = ({ posts }) => {
               <div className="media align-items-end profile-head">
                 <div className="profile mr-3">
                   <img
-                    src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+                    src={
+                      state
+                        ? state.pic
+                        : "https://res.cloudinary.com/aventra/image/upload/v1676883327/default-avatar-png_okjzqd.png"
+                    }
                     alt="..."
                     width={130}
                     className="rounded mb-2 img-thumbnail"
@@ -46,7 +50,9 @@ const ProfileTop = ({ posts }) => {
                   </small>
                 </li> */}
                 <li className="list-inline-item">
-                  <h5 className="font-weight-bold mb-0 d-block">745</h5>
+                  <h5 className="font-weight-bold mb-0 d-block">
+                    {state ? state.followers.length : "Loading..."}
+                  </h5>
                   <small className="text-muted">
                     {" "}
                     <i className="fa fa-user mr-1" />
@@ -54,7 +60,9 @@ const ProfileTop = ({ posts }) => {
                   </small>
                 </li>
                 <li className="list-inline-item">
-                  <h5 className="font-weight-bold mb-0 d-block">340</h5>
+                  <h5 className="font-weight-bold mb-0 d-block">
+                    {state ? state.following.length : "Loading..."}
+                  </h5>
                   <small className="text-muted">
                     {" "}
                     <i className="fa fa-user mr-1" />
