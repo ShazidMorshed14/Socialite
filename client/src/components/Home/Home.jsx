@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { API_URL } from "../../commons/helper";
 
 import CreatePost from "../CreatePost/CreatePost";
 import "../Home/Home.scss";
@@ -15,7 +16,7 @@ const Home = () => {
   const [posts, setPosts] = useState();
   const [loading, setLoading] = useState(false);
 
-  const fetchAllPosts = () => {
+  const fetchAllPosts = useCallback(() => {
     const headers = {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -25,7 +26,7 @@ const Home = () => {
     setLoading(true);
 
     axios
-      .get("/allpost", {
+      .get(`${API_URL}/allpost`, {
         headers: headers,
       })
       .then((response) => {
@@ -40,7 +41,7 @@ const Home = () => {
         console.log(error);
         setLoading(false);
       });
-  };
+  }, [posts]);
 
   function likePost(id) {
     const headers = {
@@ -56,7 +57,7 @@ const Home = () => {
     };
 
     axios
-      .put("/like", reqBody, {
+      .put(`${API_URL}/like`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -103,7 +104,7 @@ const Home = () => {
     };
 
     axios
-      .put("/unlike", reqBody, {
+      .put(`${API_URL}/unlike`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -151,7 +152,7 @@ const Home = () => {
     };
 
     axios
-      .put("/comment", reqBody, {
+      .put(`${API_URL}/comment`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -193,7 +194,7 @@ const Home = () => {
     };
 
     axios
-      .delete(`/deletepost/${postId}`, {
+      .delete(`${API_URL}/deletepost/${postId}`, {
         headers: headers,
       })
       .then((response) => {
@@ -250,4 +251,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default memo(Home);

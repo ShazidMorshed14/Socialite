@@ -17,6 +17,8 @@ import { useReducer } from "react";
 import { initialState, reducer } from "./components/Reducers/userReducer";
 import { useContext } from "react";
 import UserProfile from "./components/UserProfile/UserProfile";
+import SearchScreen from "./components/SearchScreen/SearchScreen";
+import PostDetails from "./components/PostDetails/PostDetails";
 
 export const UserContext = createContext();
 
@@ -42,6 +44,8 @@ const Routing = () => {
       <Route exact path="/profile" element={<NewProfile />} />
       <Route exact path="/create-post" element={<CreatePostScreen />} />
       <Route exact path="/profile/:userId" element={<UserProfile />} />
+      <Route exact path="/search" element={<SearchScreen />} />
+      <Route exact path="/post/:id" element={<PostDetails />} />
     </Routes>
   );
 };

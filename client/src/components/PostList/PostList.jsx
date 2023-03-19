@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Profile1 from "../../images/img/1.jpg";
 import Profile2 from "../../images/img/2.jpg";
 import Profile3 from "../../images/img/3.jpg";
@@ -29,4 +29,4 @@ const PostList = ({ posts, likePost, unlikePost, makeComment, deletePost }) => {
   );
 };
 
-export default PostList;
+export default memo(PostList);

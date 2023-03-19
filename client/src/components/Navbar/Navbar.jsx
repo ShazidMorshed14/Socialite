@@ -3,6 +3,7 @@ import "../../styles/common.scss";
 import { DiCodeigniter } from "react-icons/di";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
+import { BiSearchAlt } from "react-icons/bi";
 
 const Navbar = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -21,6 +22,12 @@ const Navbar = () => {
       return [
         <>
           {" "}
+          <li className="nav-item" role="presentation">
+            {" "}
+            <Link className="nav-link active" to="/search">
+              <BiSearchAlt />
+            </Link>
+          </li>
           <li className="nav-item" role="presentation">
             <Link className="nav-link active" to="/">
               Feed

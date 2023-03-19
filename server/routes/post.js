@@ -7,12 +7,25 @@ const requireSignIn = require("../Middleware/requireSignIn");
 const Post = mongoose.model("Post");
 
 router.get("/allpost", requireSignIn, (req, res) => {
-  Post.find()
+  //Post.find({ postedby: { $in: req.user.following } })
+  Post.find({})
     .populate("postedby")
     .populate("comments.postedby")
     .sort({ _id: -1 })
     .then((posts) => {
       res.json(posts);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/getSinglePost", requireSignIn, (req, res) => {
+  Post.findOne({ _id: req.body.postId })
+    .populate("postedby", "name pic")
+    .populate("comments")
+    .then((postDetails) => {
+      res.json({ post: postDetails });
     })
     .catch((err) => {
       console.log(err);

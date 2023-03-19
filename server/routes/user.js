@@ -30,6 +30,41 @@ router.get("/user/:id", requireSignIn, (req, res) => {
     });
 });
 
+router.get("/user/profile/details", requireSignIn, (req, res) => {
+  User.findOne({ _id: req.user._id })
+    .populate("following", "-password")
+    .populate("followers", "-password")
+    .then((result) => {
+      res.json({ user: result });
+    })
+    .catch((err) => {
+      return res.status(404).json({ error: err });
+    });
+});
+
+router.post("/search", requireSignIn, (req, res) => {
+  const { name } = req.body;
+
+  let queryObject = {};
+
+  if (name) {
+    queryObject.name = {
+      $regex: name,
+      $options: "i",
+    };
+  }
+
+  queryObject._id = { $nin: [req.user._id] };
+
+  User.find(queryObject)
+    .then((result) => {
+      res.json({ users: result ? result : [] });
+    })
+    .catch((err) => {
+      return res.status(404).json({ error: err });
+    });
+});
+
 router.put("/follow", requireSignIn, (req, res) => {
   User.findByIdAndUpdate(
     req.body.followId,

@@ -1,13 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { MONGOURI } = require("../server/valuekeys");
+// const { MONGOURI } = require("../server/valuekeys");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+app.use(cors());
 app.use(express.json());
 
 //mongodb connections
-mongoose.connect(MONGOURI, {
+mongoose.connect(process.env.MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

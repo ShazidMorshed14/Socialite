@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Profile from "../../images/img/profile.jpg";
 import { UserContext } from "../../App";
+import { API_URL } from "../../commons/helper";
 
 const CreatePostScreen = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const CreatePostScreen = () => {
       };
 
       axios
-        .post("/createpost", reqBody, {
+        .post(`${API_URL}/createpost`, reqBody, {
           headers: headers,
         })
         .then((response) => {
@@ -102,7 +103,7 @@ const CreatePostScreen = () => {
                 srcset=""
               />
               <Form.Label className="form-lable-txt ml-2">
-                Shazid Morshed
+                {state ? state.name : "Loading.."}
               </Form.Label>
             </div>
           </Form.Group>

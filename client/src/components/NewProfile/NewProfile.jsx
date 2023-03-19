@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { API_URL } from "../../commons/helper";
 import CreatePost from "../CreatePost/CreatePost";
 import PostList from "../PostList/PostList";
 import ProfileTop from "../ProfileTop/ProfileTop";
@@ -22,7 +23,7 @@ const NewProfile = () => {
     setLoading(true);
 
     axios
-      .get("/mypost", {
+      .get(`${API_URL}/mypost`, {
         headers: headers,
       })
       .then((response) => {
@@ -53,7 +54,7 @@ const NewProfile = () => {
     };
 
     axios
-      .put("/like", reqBody, {
+      .put(`${API_URL}/like`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -93,7 +94,7 @@ const NewProfile = () => {
     };
 
     axios
-      .put("/unlike", reqBody, {
+      .put(`${API_URL}/unlike`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -134,7 +135,7 @@ const NewProfile = () => {
     };
 
     axios
-      .put("/comment", reqBody, {
+      .put(`${API_URL}/comment`, reqBody, {
         headers: headers,
       })
       .then((response) => {

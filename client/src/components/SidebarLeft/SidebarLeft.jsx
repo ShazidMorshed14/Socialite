@@ -9,14 +9,16 @@ import Code2 from "../../images/img/code2.jpg";
 import Code3 from "../../images/img/code3.jpg";
 import Code4 from "../../images/img/code4.jpg";
 import { UserContext } from "../../App";
+import { Link, useNavigate } from "react-router-dom";
 
 const SidebarLeft = () => {
   const { state, dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <div className="sidebar left">
       <div className="container borderNone">
-        <div className="globalProfile">
+        <div className="globalProfile" onClick={() => navigate("/profile")}>
           <div
             className="globalRoundProfile"
             style={{

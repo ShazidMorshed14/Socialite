@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserContext } from "../../App";
+import { API_URL } from "../../commons/helper";
 import CreatePost from "../CreatePost/CreatePost";
 import PostList from "../PostList/PostList";
 // import ProfileTop from "../ProfileTop/ProfileTop";
@@ -34,7 +35,7 @@ const UserProfile = () => {
     setLoading(true);
 
     axios
-      .get(`/user/${userId}`, {
+      .get(`${API_URL}/user/${userId}`, {
         headers: headers,
       })
       .then((response) => {
@@ -74,7 +75,7 @@ const UserProfile = () => {
     };
 
     axios
-      .put("/like", reqBody, {
+      .put(`${API_URL}/like`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -114,7 +115,7 @@ const UserProfile = () => {
     };
 
     axios
-      .put("/unlike", reqBody, {
+      .put(`${API_URL}/unlike`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -155,7 +156,7 @@ const UserProfile = () => {
     };
 
     axios
-      .put("/comment", reqBody, {
+      .put(`${API_URL}/comment`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -196,7 +197,7 @@ const UserProfile = () => {
     };
 
     axios
-      .put("/follow", reqBody, {
+      .put(`${API_URL}/follow`, reqBody, {
         headers: headers,
       })
       .then((response) => {
@@ -241,7 +242,7 @@ const UserProfile = () => {
     };
 
     axios
-      .put("/unfollow", reqBody, {
+      .put(`${API_URL}/unfollow`, reqBody, {
         headers: headers,
       })
       .then((response) => {

@@ -5,6 +5,7 @@ import axios from "axios";
 import "../../styles/common.scss";
 import { toast } from "react-toastify";
 import FileUpload from "../FileUpload/FileUpload";
+import { API_URL } from "../../commons/helper";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Signup = () => {
 
         console.log("sending signup request", reqBody);
         axios
-          .post("/signup", reqBody, {
+          .post(`${API_URL}/signup`, reqBody, {
             headers: headers,
           })
           .then((response) => {

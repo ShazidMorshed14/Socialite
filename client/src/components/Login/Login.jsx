@@ -5,6 +5,7 @@ import axios from "axios";
 import "../../styles/common.scss";
 import { toast } from "react-toastify";
 import { UserContext } from "../../App";
+import { API_URL } from "../../commons/helper";
 
 const Login = () => {
   const { state, dispatch } = useContext(UserContext);
@@ -39,7 +40,7 @@ const Login = () => {
         };
 
         axios
-          .post("/signin", reqBody, {
+          .post(`${API_URL}/signin`, reqBody, {
             headers: headers,
           })
           .then((response) => {
